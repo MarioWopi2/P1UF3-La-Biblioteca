@@ -19,7 +19,7 @@ return new class extends Migration
 
 
         Schema::create('book_category', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
 
             $table->unsignedInteger('book_id');
             $table->unsignedBigInteger('category_id');
