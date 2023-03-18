@@ -40,13 +40,6 @@
                     </div>
                 </li>
             </ul>
-
-            <form class="form-inline my-2 my-lg-0" action="{{route('books.name')}}" method="get">
-                @csrf
-                @method("GET")
-                <input class="form-control mr-sm-2" name="title" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
     </nav>
 
@@ -80,15 +73,15 @@
                 <td> {{$book->description}} </td>
                 <td> {{$book->price}}€ </td>
                 <td>
-                    <a href="/books/{{$book->id}}">
+                    <a href="/books/{{$book->book_id}}">
                         <button class="btn btn-success" style="width: max-content;">Show more</button>
                     </a>
                 </td>
                 <td>
-                    <a href="/books/{{$book->id}}/edit">
+                    <a href="/books/{{$book->book_id}}/edit">
                         <button class="btn btn-warning" style="width: max-content;">Edit</button>
                     </a>
-                    <form action="{{route('books.delete', $book->id)}}" method="post">
+                    <form action="{{route('books.delete', $book->book_id)}}" method="post">
                         @csrf
                         @method("DELETE")
                         <button class="btn btn-danger">Eliminar</button>

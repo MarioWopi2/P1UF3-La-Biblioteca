@@ -29,7 +29,7 @@
                         Description: <textarea name=description cols=50 rows=5> {{$book->description}} </textarea><br><br>
                         Price:<input type="number" name="price" value="{{$book->price}}"><br><br>
                     </div>
-                    <button>Crear</button>
+                    <button>Editar</button>
                 </form>
             </div>
         </div>

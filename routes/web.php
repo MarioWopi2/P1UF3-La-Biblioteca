@@ -25,9 +25,17 @@ Route::group(['prefix' => "books"], function () {
         [BookController::class, 'index']
     );
     Route::get(
+        '/category/{id}',
+        [BookController::class, 'category']
+    )->name("books.category");
+    Route::get(
         '/create',
         [BookController::class, 'create']
     );
+    Route::get(
+        '/name',
+        [BookController::class, 'searchByName']
+    )->name("books.name");
     Route::get(
         '/{id}',
         [BookController::class, 'show']

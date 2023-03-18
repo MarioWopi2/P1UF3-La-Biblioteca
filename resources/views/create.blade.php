@@ -28,6 +28,15 @@
                     </div>
                     <div>
                         Description: <textarea name=description></textarea><br><br>
+
+                        Categoria: <select name="category" class="form-control" style="width: 300px">
+
+                            @foreach($categories as $category)
+                            <option value="{{$category->id}}"> {{$category->name}}</option>
+
+                            @endforeach
+                        </select>
+                        <br>
                         Price:<input type="number" name="price"><br><br>
                     </div>
                     <button>Crear</button>

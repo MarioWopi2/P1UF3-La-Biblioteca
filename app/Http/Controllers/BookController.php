@@ -12,8 +12,10 @@ class BookController extends Controller
     function index()
     {
 
-        $books = DB::table('books')->get();
-        return (view("index", ['books' => $books]));
+        $books = DB::table('books')->paginate(5);
+        $categories = DB::table('categories')->get();
+
+        return (view("index", ['books' => $books, 'categories' => $categories]));
     }
 
     function show($id)
@@ -29,7 +31,10 @@ class BookController extends Controller
 
     function create()
     {
-        return (view("create"));
+
+        $categories = DB::table('categories')->get();
+
+        return (view("create", ['categories' => $categories]));
     }
 
     function store(Request $request)
@@ -51,6 +56,10 @@ class BookController extends Controller
             ]
         );
 
+        DB::table('book_category')->insert([
+            'category_id' => $request->input("category"), 'book_id' =>   $lastInsertedId + 1
+        ]);
+
         return redirect("books/");
     }
 
@@ -64,7 +73,7 @@ class BookController extends Controller
 
     function update($id, Request $request)
     {
-        
+
         DB::table('books')->where('id', $id)->update([
             'isbn' => $request->input("isbn"),
             'title' => $request->input("title"),
@@ -79,10 +88,35 @@ class BookController extends Controller
 
     function destroy($id)
     {
-        
+
         DB::table('books')->where('id', $id)->delete();
 
         return redirect("books/");
     }
-    
+
+
+    function category($id)
+    {
+
+        $categories = DB::table('categories')->get();
+
+        $books = DB::table('books')
+            ->join('book_category', 'books.id', '=', 'book_id')
+            ->where('book_category.category_id', $id)
+            ->paginate(5);
+
+        return (view("index_category", ['books' => $books, 'categories' => $categories]));
+    }
+
+
+    function searchByName(Request $request)
+    {
+        $categories = DB::table('categories')->get();
+
+        $books = DB::table('books')
+            ->where('title', 'like', '%' . $request->input('title') . '%')
+            ->paginate(5);
+
+        return (view("index", ['books' => $books, 'categories' => $categories]));
+    }
 }
